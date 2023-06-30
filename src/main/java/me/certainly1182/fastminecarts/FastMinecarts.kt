@@ -13,6 +13,7 @@ import org.bukkit.plugin.java.JavaPlugin
 class FastMinecarts : JavaPlugin(), Listener {
     private val VANILLA_MAX_SPEED = 0.4
     private var _blockMaxSpeeds = mutableMapOf<Material, Double>()
+    private var _speedMultiplier = 1.0
     private val railTypes = listOf(
         Material.RAIL, Material.POWERED_RAIL,
         Material.DETECTOR_RAIL, Material.ACTIVATOR_RAIL
@@ -31,6 +32,8 @@ class FastMinecarts : JavaPlugin(), Listener {
                 _blockMaxSpeeds[material] = blockConfig.getDouble(key)
             }
         }
+
+        _speedMultiplier = config.getDouble("multiplier")
     }
     @EventHandler(ignoreCancelled = true)
     fun onVehicleMove(event: VehicleMoveEvent) {
@@ -45,7 +48,7 @@ class FastMinecarts : JavaPlugin(), Listener {
 
         val blockBelow = railBlock.getRelative(0, -1, 0)
         val blockMultiplier = _blockMaxSpeeds[blockBelow.type] ?: VANILLA_MAX_SPEED
-        minecart.maxSpeed = blockMultiplier
+        minecart.maxSpeed = blockMultiplier * _speedMultiplier
     }
 
     @EventHandler(ignoreCancelled = true)

@@ -1,3 +1,7 @@
+# Default minecart speed multiplier
+# Example: 1.25 = All minecarts more 25% faster
+multiplier: 1.0
+
 # List of blocks and their corresponding maximum minecart speeds
 # Blocks must be from https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/Material.html
 # The default minecart speed is 0.4
